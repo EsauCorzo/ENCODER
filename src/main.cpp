@@ -16,10 +16,6 @@ int led_azul_value = 0;
 int clk_old = 0;
 int led_selector = 0;
 
-Servo s1;
-Servo s2;
-Servo s3;
-
 void setup() 
 {
   Serial.begin(9600);
@@ -45,74 +41,74 @@ void loop()
     };
   }
   
- if(clk != clk_old)
- {
-   if(clk != dt)
-   {
-    switch (led_selector)
+  if(clk != clk_old)
+  {
+    if(clk != dt)
     {
-    case 0:
-      led_rojo_value += steps;
-      if(led_rojo_value > 255)
+      switch (led_selector)
       {
-        led_rojo_value = 255;
+      case 0:
+        led_rojo_value += steps;
+        if(led_rojo_value > 255)
+        {
+          led_rojo_value = 255;
+        }
+        break;
+      case 1:
+        led_verde_value += steps;
+        if(led_verde_value > 255)
+        {
+          led_verde_value = 255;
+        }
+        break;
+      case 2:
+        led_azul_value += steps;
+        if(led_azul_value > 255)
+        {
+          led_azul_value = 255;
+        }
+        break;
+      default:
+        break;
       }
-      break;
-    case 1:
-      led_verde_value += steps;
-      if(led_verde_value > 255)
-      {
-        led_verde_value = 255;
-      }
-      break;
-    case 2:
-      led_azul_value += steps;
-      if(led_azul_value > 255)
-      {
-        led_azul_value = 255;
-      }
-      break;
-    default:
-      break;
     }
-   }
-   if(clk == dt)
-   {
-    switch (led_selector)
+    if(clk == dt)
     {
-    case 0:
-      led_rojo_value -= steps;
-      if(led_rojo_value < 0)
+      switch (led_selector)
       {
-        led_rojo_value = 0;
+      case 0:
+        led_rojo_value -= steps;
+        if(led_rojo_value < 0)
+        {
+          led_rojo_value = 0;
+        }
+        break;
+      case 1:
+        led_verde_value -= steps;
+        if(led_verde_value < 0)
+        {
+          led_verde_value = 0;
+        }
+        break;
+      case 2:
+        led_azul_value -= steps;
+        if(led_azul_value < 0)
+        {
+          led_azul_value = 0;
+        }
+        break;
+      default:
+        break;
       }
-      break;
-    case 1:
-      led_verde_value -= steps;
-      if(led_verde_value < 0)
-      {
-        led_verde_value = 0;
-      }
-      break;
-    case 2:
-      led_azul_value -= steps;
-      if(led_azul_value < 0)
-      {
-        led_azul_value = 0;
-      }
-      break;
-    default:
-      break;
     }
-   }
-   analogWrite(led_rojo, led_rojo_value);
-   analogWrite(led_verde, led_verde_value);
-   analogWrite(led_azul, led_azul_value);
-   Serial.print(led_rojo_value);
-   Serial.print(",");
-   Serial.print(led_verde_value);
-   Serial.print(",");
-   Serial.println(led_azul_value);
- }
+    analogWrite(led_rojo, led_rojo_value);
+    analogWrite(led_verde, led_verde_value);
+    analogWrite(led_azul, led_azul_value);
+    Serial.print(led_rojo_value);
+    Serial.print(",");
+    Serial.print(led_verde_value);
+    Serial.print(",");
+    Serial.println(led_azul_value);
+  }
   clk_old = clk;
 }
